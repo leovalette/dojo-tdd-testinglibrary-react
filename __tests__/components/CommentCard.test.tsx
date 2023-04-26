@@ -2,7 +2,7 @@ import React from 'react';
 import { render } from '@testing-library/react'
 
 import '@testing-library/jest-dom';
-import { CommentCard } from '../src/components/CommentCard';
+import { CommentCard } from '../../src/components/CommentCard';
 
 describe('Comment Card', () => {
   test('it renders the comment and the author', () => {

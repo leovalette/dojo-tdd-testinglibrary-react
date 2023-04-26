@@ -1,8 +1,9 @@
 import React, { FC } from 'react';
 import { CommentCard } from './CommentCard';
+import { Comment } from '../models/comment';
 
 interface Props {
-  comments: { id: number; comment: string; author: string }[];
+  comments: Comment[];
 }
 export const CommentList: FC<Props> = ({ comments }) => (
   <div>

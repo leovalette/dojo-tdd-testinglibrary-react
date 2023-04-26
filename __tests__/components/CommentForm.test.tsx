@@ -1,5 +1,5 @@
 import { fireEvent, render } from '@testing-library/react';
-import { CommentForm } from '../src/components/CommentForm';
+import { CommentForm } from '../../src/components/CommentForm';
 
 describe('Comment Form', () => {
   test('it has a disabled button until both comment textbox and "Your Name" field have a value', () => {

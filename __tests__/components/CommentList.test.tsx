@@ -1,5 +1,5 @@
 import { render } from '@testing-library/react';
-import { CommentList } from '../src/components/CommentList';
+import { CommentList } from '../../src/components/CommentList';
 
 describe('Comment List', () => {
   test('It renders a list of comment cards with their comment and author tag', () => {

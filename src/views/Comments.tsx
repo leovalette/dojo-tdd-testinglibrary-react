@@ -1,7 +1,8 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useCallback, useEffect, useState } from 'react';
 import { Comment } from '../models/comment';
 import axios from 'axios';
 import { CommentList } from '../components/CommentList';
+import { CommentForm } from '../components/CommentForm';
 
 export const Comments: FC = () => {
   const [comments, setComments] = useState<Comment[]>([]);
@@ -14,8 +15,16 @@ export const Comments: FC = () => {
       })
       .catch(console.error);
   }, []);
+
+  const addComment = useCallback(
+    (comment: Comment) => {
+      setComments([...comments, comment]);
+    },
+    [comments]
+  );
   return (
     <div>
+      <CommentForm addComment={addComment} />
       <CommentList comments={comments} />
     </div>
   );

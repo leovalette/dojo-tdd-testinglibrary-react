@@ -2,10 +2,13 @@ import React, {
   CSSProperties,
   ChangeEvent,
   FC,
+  FormEvent,
   useCallback,
   useMemo,
   useState,
 } from 'react';
+import { Comment } from '../models/comment';
+import axios from 'axios';
 
 const formStyle: CSSProperties = {
   margin: 'auto',
@@ -30,7 +33,10 @@ const inputFieldStyle: CSSProperties = {
   float: 'right',
 };
 
-export const CommentForm: FC = () => {
+interface Props {
+  addComment: (comment: Comment) => void;
+}
+export const CommentForm: FC<Props> = ({ addComment }) => {
   const [author, setAuthor] = useState<string>('');
   const [comment, setComment] = useState<string>('');
 
@@ -50,8 +56,25 @@ export const CommentForm: FC = () => {
     setAuthor(event.target.value);
   }, []);
 
+  const onSubmit = useCallback(
+    (event: FormEvent<HTMLFormElement>) => {
+      event.preventDefault();
+      const newComment = { author, comment };
+
+      axios
+        .post<Comment>('/api/comments', { newComment })
+        .then(({ data: comment }) => {
+          addComment(comment);
+          setAuthor('');
+          setComment('');
+        })
+        .catch(console.error);
+    },
+    [author, comment, addComment]
+  );
+
   return (
-    <form style={formStyle}>
+    <form style={formStyle} onSubmit={onSubmit}>
       <div>
         <textarea
           style={commentBoxStyle}
@@ -74,7 +97,7 @@ export const CommentForm: FC = () => {
           value={author}
         />
       </div>
-      <button style={buttonStyle} disabled={isDisabled}>
+      <button type="submit" style={buttonStyle} disabled={isDisabled}>
         Add Comment
       </button>
     </form>
